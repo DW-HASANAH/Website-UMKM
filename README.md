@@ -20,7 +20,6 @@ Repository ini digunakan sebagai tempat penyimpanan source code, dokumentasi, ra
 - Bootstrap
 
 ## 📂 Struktur Repository
-- `source-code/` — Source code website.
 - `database/` — File database SQL dan rancangan relasi database.
 - `diagram/` — Use Case Diagram dan diagram perancangan sistem.
 - `documentation/` — Dokumentasi proyek.
