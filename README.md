@@ -42,4 +42,4 @@ Dokumentasi pendukung proyek akan disimpan dan diperbarui melalui repository ini
 
 
 ## 📌 Status Proyek
-Dalam tahap pengembangan.
+Dalam tahap pengembangan
