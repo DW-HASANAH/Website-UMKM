@@ -1,0 +1,122 @@
+CREATE TABLE admin (
+    id_admin INT PRIMARY KEY AUTO_INCREMENT,
+    nama VARCHAR(100) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE pelanggan (
+    id_pelanggan INT PRIMARY KEY AUTO_INCREMENT,
+    nama VARCHAR(100) NOT NULL,
+    no_hp VARCHAR(20) NOT NULL,
+    email VARCHAR(100),
+    alamat TEXT NOT NULL
+);
+
+CREATE TABLE kategori (
+    id_kategori INT PRIMARY KEY AUTO_INCREMENT,
+    id_admin INT,
+    nama_kategori VARCHAR(100) NOT NULL UNIQUE,
+    deskripsi TEXT,
+    FOREIGN KEY (id_admin) REFERENCES admin(id_admin)
+);
+
+CREATE TABLE produk (
+    id_produk INT PRIMARY KEY AUTO_INCREMENT,
+    id_kategori INT NOT NULL,
+    id_admin INT,
+    nama_produk VARCHAR(150) NOT NULL,
+    deskripsi TEXT,
+    harga DECIMAL(12,2) NOT NULL,
+    stok INT NOT NULL DEFAULT 0,
+    foto VARCHAR(255),
+    status VARCHAR(20) NOT NULL DEFAULT 'aktif',
+    FOREIGN KEY (id_kategori) REFERENCES kategori(id_kategori),
+    FOREIGN KEY (id_admin) REFERENCES admin(id_admin)
+);
+
+CREATE TABLE pesanan (
+    id_pesanan INT PRIMARY KEY AUTO_INCREMENT,
+    id_pelanggan INT NOT NULL,
+    id_admin INT,
+    tanggal_pesanan DATETIME NOT NULL,
+    nama_penerima VARCHAR(100) NOT NULL,
+    no_hp_penerima VARCHAR(20) NOT NULL,
+    alamat_penerima TEXT NOT NULL,
+    ongkos_kirim DECIMAL(12,2) NOT NULL DEFAULT 0,
+    catatan_pesanan TEXT,
+    total_harga DECIMAL(12,2) NOT NULL DEFAULT 0,
+    status_pesanan VARCHAR(30) NOT NULL,
+    FOREIGN KEY (id_pelanggan) REFERENCES pelanggan(id_pelanggan),
+    FOREIGN KEY (id_admin) REFERENCES admin(id_admin)
+);
+
+CREATE TABLE detail_pesanan (
+    id_detail INT PRIMARY KEY AUTO_INCREMENT,
+    id_pesanan INT NOT NULL,
+    id_produk INT NOT NULL,
+    jumlah INT NOT NULL,
+    harga_satuan DECIMAL(12,2) NOT NULL,
+    subtotal DECIMAL(12,2) NOT NULL,
+    FOREIGN KEY (id_pesanan) REFERENCES pesanan(id_pesanan),
+    FOREIGN KEY (id_produk) REFERENCES produk(id_produk),
+    UNIQUE (id_pesanan, id_produk)
+);
+
+CREATE TABLE pembayaran (
+    id_pembayaran INT PRIMARY KEY AUTO_INCREMENT,
+    id_pesanan INT NOT NULL,
+    id_admin INT,
+    metode_pembayaran VARCHAR(50) NOT NULL,
+    bukti_pembayaran VARCHAR(255),
+    jumlah_bayar DECIMAL(12,2) NOT NULL,
+    tanggal_bayar DATETIME,
+    status_verifikasi VARCHAR(20) NOT NULL,
+    FOREIGN KEY (id_pesanan) REFERENCES pesanan(id_pesanan),
+    FOREIGN KEY (id_admin) REFERENCES admin(id_admin)
+);
+
+CREATE TABLE promo (
+    id_promo INT PRIMARY KEY AUTO_INCREMENT,
+    id_admin INT NOT NULL,
+    nama_promo VARCHAR(150) NOT NULL,
+    deskripsi TEXT,
+    jenis_diskon VARCHAR(20) NOT NULL,
+    nilai_diskon DECIMAL(12,2) NOT NULL,
+    tanggal_mulai DATE NOT NULL,
+    tanggal_selesai DATE NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    FOREIGN KEY (id_admin) REFERENCES admin(id_admin)
+);
+
+CREATE TABLE promo_produk (
+    id_promo INT NOT NULL,
+    id_produk INT NOT NULL,
+    PRIMARY KEY (id_promo, id_produk),
+    FOREIGN KEY (id_promo) REFERENCES promo(id_promo),
+    FOREIGN KEY (id_produk) REFERENCES produk(id_produk)
+);
+
+CREATE TABLE testimoni (
+    id_testimoni INT PRIMARY KEY AUTO_INCREMENT,
+    id_pelanggan INT,
+    id_admin INT,
+    nama_pelanggan VARCHAR(100) NOT NULL,
+    isi_testimoni TEXT NOT NULL,
+    rating TINYINT,
+    status VARCHAR(20) NOT NULL,
+    FOREIGN KEY (id_pelanggan) REFERENCES pelanggan(id_pelanggan),
+    FOREIGN KEY (id_admin) REFERENCES admin(id_admin)
+);
+
+CREATE TABLE profil_toko (
+    id_profil INT PRIMARY KEY AUTO_INCREMENT,
+    id_admin INT,
+    nama_toko VARCHAR(150) NOT NULL,
+    deskripsi TEXT,
+    alamat TEXT,
+    no_whatsapp VARCHAR(20),
+    email VARCHAR(100),
+    foto_logo VARCHAR(255),
+    FOREIGN KEY (id_admin) REFERENCES admin(id_admin)
+);
