@@ -20,6 +20,7 @@ Repository ini digunakan sebagai tempat penyimpanan source code, dokumentasi, ra
 - Bootstrap
 
 ## 📂 Struktur Repository
+- README.md
 - `database/` — File database SQL dan rancangan relasi database.
 - `diagram/` — Use Case Diagram dan diagram perancangan sistem.
 - `documentation/` — Dokumentasi proyek.
@@ -28,7 +29,6 @@ Repository ini digunakan sebagai tempat penyimpanan source code, dokumentasi, ra
 ## 📑 Dokumentasi Proyek
 Dokumentasi pendukung proyek akan disimpan dan diperbarui melalui repository ini, meliputi:
 - Use Case Diagram
-- Entity Relationship Diagram (ERD)
 - Relasi Database
 - Dokumentasi perancangan sistem
 - Presentasi proyek
